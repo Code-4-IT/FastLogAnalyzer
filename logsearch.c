@@ -545,4 +545,3 @@ char *trim(char *s)
 	ptr[1] = 0;
 	return s;
 }
-
