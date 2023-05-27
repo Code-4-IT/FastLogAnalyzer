@@ -64,7 +64,7 @@ struct tags
 /* IPv4 sub Lengths */
 static int CIDR_LENGTHS[4]={ 1, 256, 65536, 16777216};
 
-static int NODES	  = 64; // Initial NODEs size to store (dynamic size)
+static int NODES    = 64; // Initial NODEs size to store (dynamic size)
 static int ip_hits  = 0;
 static int searchCnt= 0;
 static int skipCnt  = 0;
@@ -98,7 +98,7 @@ int main(int argc, char * argv[])
    // check command line arguments
    if (argc <2)
    {
-      fprintf (stderr, "\nLogsearch ver. 1.03 (c) 2008-2023 Simon Persson (code4speed@cmail.nu)\n");
+      fprintf (stderr, "\nLogsearch ver. 1.03 (c) 2008-2023 by Code4Speed\n");
       fprintf (stderr, "Usage: logsearch filename\n");
       fprintf (stderr, "(use file \"logsearch.conf\" to change settings)\n\n");
       fprintf (stderr, "Examples:\n");
@@ -108,7 +108,7 @@ int main(int argc, char * argv[])
    }
 
 	// read tags and other settings
-   if (ReadConf("logsearch.cnf") == EXIT_FAILURE) return EXIT_FAILURE;
+   if (ReadConf("logsearch.conf") == EXIT_FAILURE) return EXIT_FAILURE;
 
 	FILE *fp;
 	fprintf (stdout,"\nProcessing file : %s\n\n", argv[1]);
