@@ -37,9 +37,9 @@
    gcc -Wall logsearch.c -o logsearch
    gcc -Wall -lm logsearch.c -o logsearch // incuding the math library
 
-History:
+	History:
 
-V1.03 Initial GitHub release
+	V1.03 Initial GitHub release
 
 -----------------------------------------------------------------
 */
