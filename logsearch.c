@@ -28,14 +28,14 @@
    Analyzes huge web server log files and other types of log file
    Works with 'common' and 'combined' log web server format, see Apache docs
 
-   Code is optimzed for speed and not for readability!
+   Code is optimzed for speed, readability comes second!
 
    Display a result for each found search request together with IP:s stats
 
-   Tested under Red Hat Linux and Windows XP 32bit
+   Tested under Red Hat Linux and Windows 64/32bit
    Compile with GCC or Visual Express 2008
    gcc -Wall logsearch.c -o logsearch
-   gcc -Wall -lm logsearch.c -o logsearch // incuding the math library
+   gcc -Wall -lm logsearch.c -o logsearch // including the math library
 
 	History:
 
@@ -50,10 +50,10 @@
 #include <ctype.h>
 
 /* ---------- Global structures and vars, to speed things up --------- 
-
-   Why? Passing huge arrays on the stack to different functions will slow things down!!!
+   WHY? Passing huge arrays on the stack to different functions will slow things down!!!
+   (test it yourself on a huge (2GB+) text file, change a function to accept an array as an argument)
    This code must also work with ANSI-C compilers
-   */
+*/
 
 struct node
 {
@@ -214,6 +214,7 @@ int FastSearchLog(FILE *fp)
 			if (temp_ip == 0) 
 			{
 				fprintf (stderr, "Invalid IP: #%s#\n",line);
+				// normally I dont use "goto", but in this case it was the fastest
 				goto endfile;
 			}
 			for (i=0;i<nodeCnt;i++)
@@ -237,7 +238,8 @@ int FastSearchLog(FILE *fp)
 					if (iplist==NULL)
 					{
 						fprintf (stderr, "Could not allocate memory!\n");
-						goto endfile;
+						// normally I dont use "goto", but in this case it was the fastest
+						goto endfile; 
 					}
 				}
 				// Save IP in our list
@@ -500,7 +502,7 @@ int GetWebRequest (char *text, char *src)
 }
 
 
-/* Convert integer to IP in chars */
+/* Convert integer to IP in chars, fastest way method I tested */
 int int_to_IP(unsigned int ip, char *result)
 {
 	if (!ip || ip<CIDR_LENGTHS[3]) return -1;
@@ -509,7 +511,7 @@ int int_to_IP(unsigned int ip, char *result)
 	return 0;
 }
 
-/* Convert IP chars to integer IP */
+/* Convert IP chars to integer IP , this may be possible to optimize more */
 unsigned int IP_to_int(char *ipadr)
 {
 	if (ipadr==NULL) return 0;
@@ -535,7 +537,7 @@ unsigned int IP_to_int(char *ipadr)
 	return result;
 }
 
-/* My own trim function */
+/* My own trim function, fastest method I found */
 char *trim(char *s) 
 {
 	char *ptr;
